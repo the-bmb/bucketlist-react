@@ -9,11 +9,19 @@ class App extends Component {
     return(
       <div className="App">
         <header className="App-header">
-          <input placeholder="Whats need to be done"/>
+          <input type="text" placeholder="Whats need to be done"/>
           <ul>
-            <li></li>
+          <li className="completed">
+            <input type="checkbox" checked="checked" />
+            <input type="text" value="Buy milk" />
+            <img alt="delete" src={trashIcon} height="24" width="24" />
+          </li>
+          <li>
+            <input type="checkbox" />
+            <input type="text" value="Pay the phone bill" />
+            <img alt="delete" src={trashIcon} height="24" width="24" />
+          </li>
           </ul>
-          <img alt="delete" src={trashIcon} />
         </header>
       </div>
     )
