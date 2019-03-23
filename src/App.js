@@ -1,26 +1,62 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import trashIcon from "./trash.png";
 
 class App extends Component {
- 
-  render() {
+  state = {
+    newTask:"",
+    task : [
+      {
+        name:"Estudar",
+        completed:true
+      },
+      {
+        name:"Beber água",
+        completed:false
+      }
+    ]
+  }
+
+  handleChange(event) {
+    this.setState({ newTask: event.target.value });
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode !== 13) {
+      return;
+    }
+    event.preventDefault();
+    this.setState(state => {
+      const tasks = [...state.task];
+      tasks.push({ name: state.newTask, completed: false });
+      return {
+        task: tasks,
+        newItem: ""
+      };
+    });
+  }
+  
+  render(){
     return(
-      <div className="App">
+      <div className="App">   
         <header className="App-header">
-          <input type="text" placeholder="Whats need to be done"/>
-          <ul>
-          <li className="completed">
-            <input type="checkbox" checked="checked" />
-            <input type="text" value="Buy milk" />
-            <img alt="delete" src={trashIcon} height="24" width="24" />
-          </li>
-          <li>
-            <input type="checkbox" />
-            <input type="text" value="Pay the phone bill" />
-            <img alt="delete" src={trashIcon} height="24" width="24" />
-          </li>
+          <input type="text" placeholder="Whats need to be done" 
+            value={this.state.newTask}
+            onChange={this.handleChange.bind(this)}
+            onKeyDown={this.handleKeyDown.bind(this)}
+          />
+          <ul>  
+            {this.state.task.map(function(task, index) {
+              return(
+                <li key={index} className={task.completed ? "completed" : ""}>
+                  <input type="checkbox" checked={task.completed} />
+                  <input 
+                    type="text" 
+                    value={task.name}/>
+                  <img alt="delete" src={trashIcon} height="24" width="24" />
+                </li>
+              )
+            })}
           </ul>
         </header>
       </div>
